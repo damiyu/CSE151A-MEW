@@ -1,0 +1,2 @@
+# Avoid pushing the massive dataset
+/src/dataset/*
