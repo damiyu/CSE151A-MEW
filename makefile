@@ -1,2 +1,2 @@
 model:
-	python -W ignore ./src/model/model.py
+	python -W ignore ./src/main.py
