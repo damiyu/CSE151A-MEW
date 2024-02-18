@@ -1,4 +1,5 @@
 # Avoid pushing the massive datasets
 /src/dataset/glassdoor_reviews.csv
 /src/dataset/glassdoor_reviews.json
+/src/dataset/processed_reviews.json
 env
