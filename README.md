@@ -90,7 +90,7 @@ Currently we’re essentially creating a very large perceptron because we only h
 
 ### Conclusion
 
-Our first model ended with an accuracy of 40% which, although is better than randomly guessing, is not a reliably consistent result and wouldn’t be trustworthy as a method of prediction.  
+Our first model ended with an accuracy of 53% which, although is better than randomly guessing, is not a reliably consistent result and wouldn’t be trustworthy as a method of prediction.  
 This may be due to the model architecture as we don’t have any hidden layers limiting our model on how many features it can consult.  
 Additionally, our current analysis process is regressive, where we allow the model to output any numerical value, and we use thresholds to assign them to a rating of 1 to 5. The motivation behind this is because we wanted to maintain the comparative aspect that a 2 star rating is worse than 3 stars, but better than 1 star which would only be relevant given continuous values. However, this may not be the analysis that fits most with the data, as the target’s we are trying to reach are discrete.  
 Therefore for future improvements, we would consider increasing the number of layers and units in our model, and switching activation functions to transition towards classification.  
