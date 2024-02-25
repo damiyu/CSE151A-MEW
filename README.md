@@ -79,7 +79,7 @@ Our model’s training mean squared error was approximately 0.03. Our testing me
 
 ### Where does your model fit in the fitting graph:
 
-**TODO**
+Given our test and train errors are very close to each other (Train MSE: 0.0307 vs. Test MSE: 0.0309 and Train FVU: 0.3543 vs. Test FVU: 0.3582), we know that our model is not overfitting. However, since our test and train errors are relatively high and the accuracy of our model is only 0.4073, we know that there is much room for improvement and indicates that our model is underfitting. 
 
 ### Next Steps
 
