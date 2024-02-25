@@ -65,7 +65,7 @@ The 'current' feature describes whether or not the entry is a current or former 
 
 ### Baseline Model Evaluation
 
-Our model’s training mean squared error was approximately 0.03. Our testing mean squared error also came out to be approximately 0.03. The two metrics are nearly the same, indicating that overfitting in our model is very unlikely. Our train and test fraction of variance unexplained (FVU) were roughly equal as well (0.35 and 0.36 respectively) which also indicates that our current model is not overfitting. Gaging our models performance, based on predictions using test data, we see an accuracy of approximately 0.41, precision of 0.29, and recall of 0.41. Our accuracy indicates that the model is on the right track, as it is performing much better than pure guessing, but far from fully optimized. The disparity between precision and suggests that our model tends to report false negatives at higher rate than it does false positives.
+Our model’s training mean squared error was approximately 0.03. Our testing mean squared error also came out to be approximately 0.03. The two metrics are nearly the same, indicating that overfitting in our model is very unlikely. Our train and test fraction of variance unexplained (FVU) were roughly equal as well (0.35 and 0.36 respectively) which also indicates that our current model is not overfitting. Gaging our models performance, based on predictions using test data, we see an accuracy of approximately 0.53, precision of 0.54, and recall of 0.53. Our accuracy indicates that the model is on the right track, as it is performing much better than pure guessing, but far from fully optimized. The disparity between precision and suggests that our model tends to report false negatives at higher rate than it does false positives.
 
 | Metric            | Score  |
 | ----------------- | ------ |
@@ -73,13 +73,15 @@ Our model’s training mean squared error was approximately 0.03. Our testing me
 | Test Error (mse)  | 0.0310 |
 | Train FVU         | 0.3544 |
 | Test FVU          | 0.3583 |
-| Accuracy          | 0.4074 |
-| Precision         | 0.2940 |
-| Recall            | 0.4074 |
+| Accuracy          | 0.5339 |
+| Precision         | 0.5449 |
+| Recall            | 0.5338 |
 
 ### Where does your model fit in the fitting graph:
 
-Given our test and train errors are very close to each other (Train MSE: 0.0307 vs. Test MSE: 0.0309 and Train FVU: 0.3543 vs. Test FVU: 0.3582), we know that our model is not overfitting. However, since our test and train errors are relatively high and the accuracy of our model is only 0.4073, we know that there is much room for improvement and indicates that our model is underfitting. 
+![alt text](./src/media/image.png)
+
+Given our test and train errors are very close to each other (Train MSE: 0.0308 vs. Test MSE: 0.0310 and Train FVU: 0.3544 vs. Test FVU: 0.3583), we know that our model is not overfitting. However, since our test and train errors are relatively high and the accuracy of our model is only 0.5339, we know that there is much room for improvement and indicates that our model is underfitting.
 
 ### Next Steps
 
@@ -93,3 +95,4 @@ This may be due to the model architecture as we don’t have any hidden layers l
 Additionally, our current analysis process is regressive, where we allow the model to output any numerical value, and we use thresholds to assign them to a rating of 1 to 5. The motivation behind this is because we wanted to maintain the comparative aspect that a 2 star rating is worse than 3 stars, but better than 1 star which would only be relevant given continuous values. However, this may not be the analysis that fits most with the data, as the target’s we are trying to reach are discrete.  
 Therefore for future improvements, we would consider increasing the number of layers and units in our model, and switching activation functions to transition towards classification.  
 We could also consider adding additional text analysis to the headline, pros, and cons as these columns may also contain some more sentiment we can use to augment our decisions.
+Thus, two potentially great models are a DNN with more layers or an ANN that utilizes the sentiment of the text.
