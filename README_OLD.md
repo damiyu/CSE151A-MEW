@@ -79,7 +79,7 @@ Our model’s training mean squared error was approximately 0.03. Our testing me
 
 ### Where does your model fit in the fitting graph:
 
-![alt text](./src/media/image.png)
+![alt text](./src/media/model1_loss_by_epoch.png)
 
 Given our test and train errors are very close to each other (Train MSE: 0.0308 vs. Test MSE: 0.0310 and Train FVU: 0.3544 vs. Test FVU: 0.3583), we know that our model is not overfitting. However, since our test and train errors are relatively high and the accuracy of our model is only 0.5339, we know that there is much room for improvement which indicates that our model is underfitting.
 
@@ -103,12 +103,12 @@ Thus, two potentially great models are a DNN with more layers or an ANN that uti
 
 For our second model, we used the same data as the baseline model, but with a minor augmentation. The ratings labels were denormalized so they could be classified, which has no impact on the actual meaning behind the data. To allow for comparison, we would evaluate our second model with the same metrics as the first, which were MSE, FVU, and Accuracy. The conclusion of our second model is that the SVM model outperforms the baseline model in terms of accuracy. However, there is a larger gap between the FVU and MSE due to the fact that the SVM model's job is to classify and achieve a greater accuracy, which it does. This leaves the FVU and MSE in favor of the baseline model as the SVM model's job is not to keep loss low. The SVM model's accuracy surpassed that of the baseline model by a little above 10%. Although this presents a slightly better accuracy, the SVM model had a higher MSE and FVU. The train MSE was 0.0331 for the SVM model compared to 0.0308 train MSE for the baseline model. The training FVU for the baseline model was at 0.3544 and SVM at 0.3809. While the SVM's job is to classify and acquire a better accuracy, it does not do as well of a job in keeping as low of a loss as the baseline perceptron model as seen by the following results:
 
-| Metric            | Baseline Score  | SVM Score |
-| ----------------- | ------ | ------ |
-| Train Error (mse) | 0.0308 | 0.0331 |
-| Train FVU         | 0.3544 | 0.3809 |
-| Test Error (mse)  | 0.0310 | 0.0342 |
-| Test FVU          | 0.3583 | 0.3956 |
-| Test Accuracy     | 0.5339 | 0.6422 |
+| Metric            | Baseline Score | SVM Score |
+| ----------------- | -------------- | --------- |
+| Train Error (mse) | 0.0308         | 0.0331    |
+| Train FVU         | 0.3544         | 0.3809    |
+| Test Error (mse)  | 0.0310         | 0.0342    |
+| Test FVU          | 0.3583         | 0.3956    |
+| Test Accuracy     | 0.5339         | 0.6422    |
 
 The results shown are from our best SVM model through extensive hyperparameter tuning. We performed a grid search over different hyperparameters like gamma and C regularization. For consistency, we used the Radial Basis Function kernel for all our SVM models. Some future improvements that we could do is experiment with different kernel functions, which could potentially fit the data distribution better and lead to a lower loss across the MSE and FVU. Also, we could try implementing Bayesian optimization or randomized search to fully squeeze out some max results from the model. Ultimately, this model does not show much promise when it has higher loss and FVU over a baseline model.
