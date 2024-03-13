@@ -90,7 +90,21 @@ svm = LinearSVC(dual=False, max_iter=10000000)
 
 [Model 3 Notebook](/src/models/neural_net.ipynb)
 
-TODO
+We decided to experiment further by creating a linear regression based neural network as we wanted to see if there would be any improvements if more layers are added to accommodate more complexity. Once again we used the baseline models data with a few changes: we dropped the `firm` and `job_title`, we split up the `date` column into separate `month` and `year` columns, we added columns `pros_length` and `cons_length`, we encoded the `current` column to ints, we one-hot encoded the `recommend`, `ceo_approv`, `outlook`, `month`, and `duration`, and finally we used min-max normalization on all non-encoded numerical fields. We continued to use MSE, and FVU as our metrics.
+
+```
+def buildReluNN():
+    model = Sequential([
+        Dense(32, activation = 'relu', input_dim = X.shape[1]),
+        Dense(16, activation = 'relu'),
+        Dense(8, activation = 'relu'),
+        Dense(4, activation = 'relu'),
+        Dense(1, activation = 'sigmoid'),
+    ])
+    optimizer = SGD(learning_rate=0.1)
+    model.compile(optimizer=optimizer, loss='mse', metrics=['MSE'])
+    return(model)
+```
 
 ## Results
 
@@ -130,7 +144,19 @@ The SVM training and testing MSE’s were about 0.033 and 0.034 respectively. Th
 
 #### Model 3 Results
 
-TODO
+The NN’s training MSE was 0.028, and the testing MSE was 0.029. The FVU for training and testing were 0.332 and 0.337 respectively. The overall testing accuracy was 0.595. Below is a table of the results.
+
+| Metric            | Score  |
+| ----------------- | ------ |
+| Train Error (mse) | 0.0288 |
+| Test Error (mse)  | 0.0291 |
+| Train FVU         | 0.3327 |
+| Test FVU          | 0.3375 |
+| Accuracy          | 0.5958 |
+
+We found that the NN learned comparatively slower than the previous models, only converging at around 100 epochs. The training can be visualized with the below graph:
+
+![alt text](./src/media/model3_loss.png)
 
 ## Discussion
 
@@ -144,9 +170,7 @@ We decided to drop fields with high amounts of missing values because we didn't 
 
 #### Model 1 Evaluation
 
-Our first model ultimately ended with an accuracy of 53% which, although is better than randomly guessing, is not a reliably consistent result and wouldn’t be trustworthy as a method of prediction.
-
-This may have been due to the model architecture as we don’t have any hidden layers limiting our model on how many features it can consult.Additionally, our current analysis process is regressive, where we allow the model to output any numerical value, and we use thresholds to assign them to a rating of 1 to 5. The motivation behind this is that we wanted to maintain the comparative aspect that a 2-star rating is worse than 3 stars but better than 1 star which would only be relevant given continuous values. However, this may not be the analysis that fits most with the data, as the targets we are trying to reach are discrete.
+Our first model ultimately ended with an accuracy of 53% which, although is better than randomly guessing, is not a reliably consistent result and wouldn’t be trustworthy as a method of prediction. This may have been due to the model architecture as we don’t have any hidden layers limiting our model on how many features it can consult. Additionally, our current analysis process is regressive, where we allow the model to output any numerical value, and we use thresholds to assign them to a rating of 1 to 5. The motivation behind this is that we wanted to maintain the comparative aspect that a 2-star rating is worse than 3 stars but better than 1 star which would only be relevant given continuous values. However, this may not be the analysis that fits most with the data, as the targets we are trying to reach are discrete.
 
 When planning for future improvements, we considered increasing the number of layers and units in our model and switching activation functions to transition towards classification. We also considered adding additional text analysis to the headline, pros, and cons as these columns may also contain some more sentiment we can use to augment our decisions. Thus, two potentially great models are a DNN with more layers or an ANN that utilizes the sentiment of the text.
 
@@ -158,11 +182,15 @@ The results shown are from our best SVM model through extensive hyperparameter t
 
 #### Model 3 Evaluation
 
-TODO
+We adjusted the data used to train this model in an attempt to improve the accuracy by using data more correlated with what we were trying to predict. For example, we dropped the `firm` and `job_title` as we don’t believe they have major impacts on the outcome. We also added columns `pros_length` and `cons_length` since we hypothesized that the lengths of text fields may have some impact on an employees sentiment regarding the company.
+
+The conclusion of our third model is that the Neural Network model outperforms both the SVM model and the baseline model in terms of accuracy. However, there is a larger gap between the FVU and MSE due to the fact that the SVM model's job is to classify and achieve a greater accuracy, which it does. This leaves the FVU and MSE in favor of the baseline model as the SVM model's job is not to keep loss low. The SVM model's accuracy surpassed that of the baseline model by a little above 10%. Although this presents a slightly better accuracy, the SVM model had a higher MSE and FVU. The train MSE was 0.0331 for the SVM model compared to 0.0308 train MSE for the baseline model. The training FVU for the baseline model was at 0.3544 and SVM at 0.3809. While the SVM's job is to classify and acquire a better accuracy, it does not do as well of a job in keeping as low of a loss as the baseline perceptron model.
+
+The results shown are from our best SVM model through extensive hyperparameter tuning. We performed a grid search over different hyperparameters like gamma and C regularization. For consistency, we used the Radial Basis Function kernel for all our SVM models. Some future improvements that we could do is experiment with different kernel functions, which could potentially fit the data distribution better and lead to a lower loss across the MSE and FVU. Also, we could try implementing Bayesian optimization or randomized search to fully squeeze out some max results from the model. Ultimately, this model does not show much promise when it has higher loss and FVU over a baseline model.
 
 ## Conclusion
 
-TODO
+Generally, our model underperformed relative to our expectations. While we did see minor improvements across our models, we were never able to achieve high levels of predictive accuracy. Moving forward from our current position, we would likely take a different approach to how we processed our data. In terms of the data, one area we ignored was the text values. Next time, we could have preprocessed these values by doing sentiment analysis. It seems very probable that sentiment would be correlated with the overall rating of a company. Thus, it is likely that by training our model on this additional data we could have improved accuracy. We also could have experimented more with reducing the number of fields of our training data. We trained our model using almost every attribute in the dataset. Had we done additional correlation measurements beforehand, we could have gained accuracy by only using the most relevant data. We could also do further work in our model selection and experimentation. While we did do hyperparameter tuning and used different models, we would like to experiment with more iterations in the future. Despite our shortcomings in performance, our model still provided insights into the problem of predicting the overall rating of a company from employee reviews. Our results were significantly higher than if the model was just randomly guessing. Thus, we can safely say that employee reviews are likely indicators of a company's overall rating. Given this finding, a more performant model should be possible with further optimizations.
 
 ## Contributions
 
@@ -173,8 +201,8 @@ For our project, we never assigned specific permanent roles. Instead, we would h
 #### Specific contributions by team member
 
 Name: Darren Yu\
-Title:\
-Contribution:
+Title: Team Facilitator\
+Contribution: Repository Traffic Control, Data Exploration, Data Preprocessing, and Model 2 Hyperparameter Tuning
 
 Name: Michael Ye\
 Title: Team Member\
@@ -193,8 +221,8 @@ Title:\
 Contribution:
 
 Name: Albert Chen\
-Title:\
-Contribution:
+Title: Team member\
+Contribution: Data exploration, Model 1 conclusion writeup, Model 3 tuning, and evaluation
 
 Name: Leo Friedman\
 Title: Team member\
