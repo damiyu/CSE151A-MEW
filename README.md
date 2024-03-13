@@ -217,8 +217,8 @@ Title: Team member\
 Contribution: Data exploration, Model 1 evaluation, Model 2 conclusion writeup
 
 Name: Yifan Chen\
-Title:\
-Contribution:
+Title: Team Member\
+Contribution: Project Brainstorming, data exploration and processing, evaluation for Model 1, and Model 2 training.
 
 Name: Albert Chen\
 Title: Team member\
