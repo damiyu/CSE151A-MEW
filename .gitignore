@@ -3,3 +3,8 @@
 /src/dataset/glassdoor_reviews.json
 /src/dataset/processed_reviews.json
 env
+
+# No ipynb_checkpoints
+/src/.ipynb_checkpoints
+/src/models/.ipynb_checkpoints
+/src/models/untitled_project
