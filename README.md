@@ -13,7 +13,7 @@
 
 ## Introduction
 
-Our project focuses on a dataset containing Glassdoor reviews from both former and current employees of various companies. These reviews contain various attributes such as the date of the review, pros and cons sections, CEO approval, overall outlook, categorical ratings, and overall rating to name a few. Using various supervised learning techniques, we attempt to create different models (linear perceptron, SVM, and neural network) that predict the overall rating of a company from a given employee based on the data given from the review that the employee submitted. Having a good predictive model would allow both employers and employees to accurately judge the overall reception of a company based on the different factors found in each individual review. This could be useful for employees who are trying to gauge how important various aspects of a company are, and for employers who are trying to improve their company image. Ultimately, our predictive model could lead to a better employer-employee relationship and create a more efficient and enjoyable workplace environment.
+Our project focuses on a dataset containing Glassdoor reviews from both former and current employees of various companies. These reviews contain various attributes such as the date of the review, pros and cons sections, CEO approval, overall outlook, categorical ratings, and overall rating to name a few. Using various supervised learning techniques, we attempt to create different models (linear perceptron, SVM, and neural network) that predict the overall rating of a company from a given employee based on the data given from the review that the employee submitted. Having a good predictive model would allow both employers and employees to accurately judge the overall reception of a company based on the different factors found in each review. This could be useful for employees who are trying to gauge how important various aspects of a company are, and for employers who are trying to improve their company image. Ultimately, our predictive model could lead to a better employer-employee relationship and create a more efficient and enjoyable workplace environment.
 
 ## Methods
 
@@ -27,7 +27,7 @@ Next, we did a more in-depth analysis of the values found in each field. We used
 
 ![Ratings by year](./src/media/ratings_by_year.png)
 
-Before moving on to preprocessing, we also took a look at the data missing from our dataset. By summing over the counts of null values in each field, we found that many of our fields (especially those with integer type ratings) had around 20% null/missing values. The fields Location and Diversity Inclusion were missing even more (35% and 84% respectively). Below is a table showing the percentage of missing values for each column.
+Before moving on to preprocessing, we also took a look at the data missing from our dataset. By summing over the counts of null values in each field, we found that many of our fields (especially those with integer type ratings) had around 20% null/missing values. The field's Location and Diversity Inclusion were missing even more (35% and 84% respectively). Below is a table showing the percentage of missing values for each column.
 
 | Column name         | Percent of Missing Values |
 | ------------------- | ------------------------- |
@@ -80,7 +80,7 @@ def buildSigmoidPerceptron():
 
 [Model 2 Notebook](/src/models/svm_classification.ipynb)
 
-For our second model, we to made a multi-class classification model using a support vector machine (SVM). We used the same data as the baseline model, but with a minor augmentation: the ratings labels were denormalized so they could be classified, which has no impact on the actual meaning behind the data but allows us to categorically classify the ratings on an integer scale from 1 to 5. To allow for comparison, we would evaluate our second model with the same metrics as the first, which were MSE, FVU, and Accuracy. Below is the fundamental code for this model.
+For our second model, we made a multi-class classification model using a support vector machine (SVM). We used the same data as the baseline model but with a minor augmentation: the rating labels were denormalized so they could be classified, which has no impact on the actual meaning behind the data but allows us to categorically classify the ratings on an integer scale from 1 to 5. To allow for comparison, we would evaluate our second model with the same metrics as the first, which were MSE, FVU, and Accuracy. Below is the fundamental code for this model.
 
 ```
 svm = LinearSVC(dual=False, max_iter=10000000)
@@ -90,7 +90,7 @@ svm = LinearSVC(dual=False, max_iter=10000000)
 
 [Model 3 Notebook](/src/models/neural_net.ipynb)
 
-We decided to experiment further by creating a linear regression based neural network as we wanted to see if there would be any improvements if more layers are added to accommodate more complexity. Once again we used the baseline models data with a few changes: we dropped the `firm` and `job_title`, we split up the `date` column into separate `month` and `year` columns, we added columns `pros_length` and `cons_length`, we encoded the `current` column to ints, we one-hot encoded the `recommend`, `ceo_approv`, `outlook`, `month`, and `duration`, and finally we used min-max normalization on all non-encoded numerical fields. We continued to use MSE, and FVU as our metrics.
+We decided to experiment further by creating a linear regression-based neural network as we wanted to see if there would be any improvements if more layers were added to accommodate more complexity. Once again we used the baseline models data with a few changes: we dropped the `firm` and `job_title`, we split up the `date` column into separate `month` and `year` columns, we added columns `pros_length` and `cons_length`, we encoded the `current` column to ints, we one-hot encoded the `recommend`, `ceo_approv`, `outlook`, `month`, and `duration`, and finally we used min-max normalization on all non-encoded numerical fields. We continued to use MSE, and FVU as our metrics.
 
 ```
 def buildReluNN():
@@ -114,7 +114,7 @@ After dropping the entries with over 20% missing feature values 151,824 entries 
 
 #### Model 1 Results
 
-The baseline model’s training mean squared error was approximately 0.03. Our testing mean squared error also came out to be approximately 0.03. Our train and test fraction of variance unexplained (FVU) were roughly equal as well (0.35 and 0.36 respectively). Gaging our models performance, based on predictions using test data, we see an accuracy of approximately 0.53, precision of 0.54, and recall of 0.53. Below is a table denoting our model’s comprehensive performance.
+The baseline model’s training mean squared error was approximately 0.03. Our testing mean squared error also came out to be approximately 0.03. Our train and test fractions of variance unexplained (FVU) were roughly equal as well (0.35 and 0.36 respectively). Gaging our model performance, based on predictions using test data, we see an accuracy of approximately 0.53, precision of 0.54, and recall of 0.53. Below is a table denoting our model’s comprehensive performance.
 
 | Metric            | Score  |
 | ----------------- | ------ |
@@ -132,7 +132,7 @@ We also measured our models' performance (in terms of loss) over each epoch. As 
 
 #### Model 2 Results
 
-The SVM training and testing MSE’s were about 0.033 and 0.034 respectively. The FVU for the SVM were 0.38 for training and 0.39 for testing. The overall accuracy was about 0.64. Below are the resulting metrics from our SVM model.
+The SVM training and testing MSE’s were about 0.033 and 0.034 respectively. The FVU for the SVM was 0.38 for training and 0.39 for testing. The overall accuracy was about 0.64. Below are the resulting metrics from our SVM model.
 
 | Metric            | SVM Score |
 | ----------------- | --------- |
@@ -154,25 +154,25 @@ The NN’s training MSE was 0.028, and the testing MSE was 0.029. The FVU for tr
 | Test FVU          | 0.3375 |
 | Accuracy          | 0.5958 |
 
-We found that the NN learned comparatively slower than the previous models, only converging at around 100 epochs. The training can be visualized with the below graph:
+We found that the NN learned comparatively slower than the previous models, only converging at around 100 epochs. The training can be visualized in the below graph:
 
 ![alt text](./src/media/model3_loss.png)
 
 ## Discussion
 
-#### Data exploration
+#### Data Exploration
 
-Our initial data exlploration indicated that a performant model should have been possible. While we did have a sizable amount of missing data, our dataset appeared large enough (~800,000 entries) to rectify this. Most of this data was also from recent years, indicating that our model should be able to extrapolate to current trends more easily.
+Our initial data exploration indicated that a performant model should have been possible. While we did have a sizable amount of missing data, our dataset appeared large enough (~800,000 entries) to rectify this. Most of this data was also from recent years, indicating that our model should be able to extrapolate to current trends more easily.
 
 #### Preprocessing
 
-We decided to drop fields with high amounts of missing values because we didn't want to risk arbitrarily skewing our data with large amounts of filled/fabricated data. These droped fields also didn't show high amounts of correlation with our class, meaning they wouldn't have been very impactful in our model's training anyway. For more critical features, and those with smaller amounts of missing data, we chose to fill in the missing values with the averages for that specific feature because it cleans up the data and preserves as much of it as possible without skewing it in an unnatural manner.
+We decided to drop fields with high amounts of missing values because we didn't want to risk arbitrarily skewing our data with large amounts of filled/fabricated data. These dropped fields also didn't show high amounts of correlation with our class, meaning they wouldn't have been very impactful in our model's training anyway. For more critical features, and those with smaller amounts of missing data, we chose to fill in the missing values with the averages for that specific feature because it cleans up the data and preserves as much of it as possible without skewing it in an unnatural manner.
 
 #### Model 1 Evaluation
 
 Our first model ultimately ended with an accuracy of 53% which, although is better than randomly guessing, is not a reliably consistent result and wouldn’t be trustworthy as a method of prediction. This may have been due to the model architecture as we don’t have any hidden layers limiting our model on how many features it can consult. Additionally, our current analysis process is regressive, where we allow the model to output any numerical value, and we use thresholds to assign them to a rating of 1 to 5. The motivation behind this is that we wanted to maintain the comparative aspect that a 2-star rating is worse than 3 stars but better than 1 star which would only be relevant given continuous values. However, this may not be the analysis that fits most with the data, as the targets we are trying to reach are discrete.
 
-When planning for future improvements, we considered increasing the number of layers and units in our model and switching activation functions to transition towards classification. We also considered adding additional text analysis to the headline, pros, and cons as these columns may also contain some more sentiment we can use to augment our decisions. Thus, two potentially great models are a DNN with more layers or an ANN that utilizes the sentiment of the text.
+When planning for future improvements, we considered increasing the number of layers and units in our model and switching activation functions to transition toward classification. We also considered adding additional text analysis to the headline, pros, and cons as these columns may also contain some more sentiment we can use to augment our decisions. Thus, two potentially great models are a DNN with more layers or an ANN that utilizes the sentiment of the text.
 
 #### Model 2 Evaluation
 
@@ -182,9 +182,9 @@ The results shown are from our best SVM model through extensive hyperparameter t
 
 #### Model 3 Evaluation
 
-We adjusted the data used to train this model in an attempt to improve the accuracy by using data more correlated with what we were trying to predict. For example, we dropped the `firm` and `job_title` as we don’t believe they have major impacts on the outcome. We also added columns `pros_length` and `cons_length` since we hypothesized that the lengths of text fields may have some impact on an employees sentiment regarding the company.
+We adjusted the data used to train this model in an attempt to improve the accuracy by using data more correlated with what we were trying to predict. For example, we dropped the `firm` and `job_title` as we don’t believe they have major impacts on the outcome. We also added columns `pros_length` and `cons_length` since we hypothesized that the lengths of text fields may have some impact on an employee's sentiment regarding the company.
 
-The conclusion of our third model is that the Neural Network model outperforms both the SVM model and the baseline model in terms of accuracy. However, there is a larger gap between the FVU and MSE due to the fact that the SVM model's job is to classify and achieve a greater accuracy, which it does. This leaves the FVU and MSE in favor of the baseline model as the SVM model's job is not to keep loss low. The SVM model's accuracy surpassed that of the baseline model by a little above 10%. Although this presents a slightly better accuracy, the SVM model had a higher MSE and FVU. The train MSE was 0.0331 for the SVM model compared to 0.0308 train MSE for the baseline model. The training FVU for the baseline model was at 0.3544 and SVM at 0.3809. While the SVM's job is to classify and acquire a better accuracy, it does not do as well of a job in keeping as low of a loss as the baseline perceptron model.
+Our third model concludes that the Neural Network model outperforms both the SVM model and the baseline model in terms of accuracy. However, there is a larger gap between the FVU and MSE since the SVM model's job is to classify and achieve greater accuracy, which it does. This leaves the FVU and MSE in favor of the baseline model as the SVM model's job is not to keep loss low. The SVM model's accuracy surpassed that of the baseline model by a little above 10%. Although this presents a slightly better accuracy, the SVM model had a higher MSE and FVU. The train MSE was 0.0331 for the SVM model compared to 0.0308 train MSE for the baseline model. The training FVU for the baseline model was at 0.3544 and SVM at 0.3809. While the SVM's job is to classify and acquire a better accuracy, it does not do as well of a job in keeping as low of a loss as the baseline perceptron model.
 
 The results shown are from our best SVM model through extensive hyperparameter tuning. We performed a grid search over different hyperparameters like gamma and C regularization. For consistency, we used the Radial Basis Function kernel for all our SVM models. Some future improvements that we could do is experiment with different kernel functions, which could potentially fit the data distribution better and lead to a lower loss across the MSE and FVU. Also, we could try implementing Bayesian optimization or randomized search to fully squeeze out some max results from the model. Ultimately, this model does not show much promise when it has higher loss and FVU over a baseline model.
 
