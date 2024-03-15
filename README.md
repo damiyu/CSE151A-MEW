@@ -21,7 +21,7 @@ Our project focuses on a dataset containing Glassdoor reviews from both former a
 
 [Data Exploration Notebook](/src/analysis.ipynb)
 
-Firstly, we used commands like`dataset.shape` and `dataset.columns` to gauge characteristics of our dataset. Our initial exploration revealed that our dataset contained over 800K reviews, each with 18 fields. Each review has an overall rating of integer values 1-5 and contains categories such as Career Opportunities, Compensation and Benefits, Company Culture, Management, and Work Life Balance. It also has rankings for whether the employee approves of the CEO, the Company Outlook, and the overall company. Finally, it contains textual data the employee has written about the pros and cons of the company as data about location, job title, and date.
+Firstly, we used commands like`dataset.shape` and `dataset.columns` to gauge characteristics of our dataset. Our initial exploration revealed that our dataset contained over 800K reviews, each with 18 fields. Each review has an overall rating of integer values 1-5 and contains categories such as Career Opportunities, Compensation and Benefits, Company Culture, Management, and Work Life Balance. It also has rankings for whether the employee approves of the CEO, the Company Outlook, and the overall company. Finally, it contains textual data the employee has written about the pros and cons of the company, such as data about location, job title, and date.
 
 Next, we did a more in-depth analysis of the values found in each field. We used `value_counts()` to reveal that the date of the reviews ranged from 2008-2021, with a majority of the reviews done between 2016-2021. We also found the mean of most numerical ratings fields to be around 3.5/5. We furthered our exploration by analyzing the change in ratings over time. As displayed in the graph below, it is apparent that ratings have tended to increase in more recent years.
 
@@ -184,50 +184,51 @@ The results shown are from our best SVM model through extensive hyperparameter t
 
 We adjusted the data used to train this model in an attempt to improve the accuracy by using data more correlated with what we were trying to predict. For example, we dropped the `firm` and `job_title` as we don’t believe they have major impacts on the outcome. We also added columns `pros_length` and `cons_length` since we hypothesized that the lengths of text fields may have some impact on an employee's sentiment regarding the company.
 
-Our third model concludes that the Neural Network model outperforms both the SVM model and the baseline model in terms of accuracy. However, there is a larger gap between the FVU and MSE since the SVM model's job is to classify and achieve greater accuracy, which it does. This leaves the FVU and MSE in favor of the baseline model as the SVM model's job is not to keep loss low. The SVM model's accuracy surpassed that of the baseline model by a little above 10%. Although this presents a slightly better accuracy, the SVM model had a higher MSE and FVU. The train MSE was 0.0331 for the SVM model compared to 0.0308 train MSE for the baseline model. The training FVU for the baseline model was at 0.3544 and SVM at 0.3809. While the SVM's job is to classify and acquire a better accuracy, it does not do as well of a job in keeping as low of a loss as the baseline perceptron model.
+The results of the third model show an improvement in MSE and FVU compared to the previous two models, however, its accuracy falls in the middle of the pack, beating out the baseline model but not beating the SVM. It seems that more layers did well to improve the complexity and reduce the loss, however, it is possible that continuing with a regressive approach and allowing the prediction of continuous values negatively impacted the accuracy. We attempted to perform hyperparameter tuning to increase the accuracy, but we found that all changes to the number of units in each layer resulted in insignificant differences in loss and accuracy. During this tuning process, we did realize that the neural network took much longer to learn and converge its loss due to the large increase in complexity, meaning we significantly increased the training epochs to account for this.
 
-The results shown are from our best SVM model through extensive hyperparameter tuning. We performed a grid search over different hyperparameters like gamma and C regularization. For consistency, we used the Radial Basis Function kernel for all our SVM models. Some future improvements that we could do is experiment with different kernel functions, which could potentially fit the data distribution better and lead to a lower loss across the MSE and FVU. Also, we could try implementing Bayesian optimization or randomized search to fully squeeze out some max results from the model. Ultimately, this model does not show much promise when it has higher loss and FVU over a baseline model.
+We also found that decreasing the learning rate improved performance for this model. We assume that a higher learning rate leads to unnecessary confusion in the learning process which is amplified by the large number of units likely resulting in the model learning bad features, especially during the start of training. In the future we could again try and improve the neural network by switching to a classification-based model since, as evident with model 2, classification models seem to fit much better with this problem and the given dataset than regression. Ultimately due to this model’s poor accuracy, it still wouldn’t be particularly useful in terms of predictions, however, the reduction in MSE and FVU shows some promise for continued improvements.
+
 
 ## Conclusion
 
-Generally, our model underperformed relative to our expectations. While we did see minor improvements across our models, we were never able to achieve high levels of predictive accuracy. Moving forward from our current position, we would likely take a different approach to how we processed our data. In terms of the data, one area we ignored was the text values. Next time, we could have preprocessed these values by doing sentiment analysis. It seems very probable that sentiment would be correlated with the overall rating of a company. Thus, it is likely that by training our model on this additional data we could have improved accuracy. We also could have experimented more with reducing the number of fields of our training data. We trained our model using almost every attribute in the dataset. Had we done additional correlation measurements beforehand, we could have gained accuracy by only using the most relevant data. We could also do further work in our model selection and experimentation. While we did do hyperparameter tuning and used different models, we would like to experiment with more iterations in the future. Despite our shortcomings in performance, our model still provided insights into the problem of predicting the overall rating of a company from employee reviews. Our results were significantly higher than if the model was just randomly guessing. Thus, we can safely say that employee reviews are likely indicators of a company's overall rating. Given this finding, a more performant model should be possible with further optimizations.
+Generally, our model underperformed relative to our expectations. While we did see minor improvements across our models, we were never able to achieve high levels of predictive accuracy. Moving forward from our current position, we would likely take a different approach to how we process our data. In terms of the data, one area we ignored was the text values. Next time, we could have preprocessed these values by doing sentiment analysis. It seems very probable that sentiment would be correlated with the overall rating of a company. Thus, it is likely that by training our model on this additional data we could have improved accuracy. We also could have experimented more with reducing the number of fields of our training data. We trained our model using almost every attribute in the dataset. Had we done additional correlation measurements beforehand, we could have gained accuracy by only using the most relevant data. We could also do further work in our model selection and experimentation. While we did do hyperparameter tuning and used different models, we would like to experiment with more iterations in the future. Despite our shortcomings in performance, our model still provided insights into the problem of predicting the overall rating of a company from employee reviews. Our results were significantly higher than if the model was just randomly guessing. Thus, we can safely say that employee reviews are likely indicators of a company's overall rating. Given this finding, a more performant model should be possible with further optimizations.
 
 ## Contributions
 
 #### Contribution Overview
 
-For our project, we never assigned specific permanent roles. Instead, we would hold a meeting at the release of each milestone where we would decide on roles and our direction for that specific milestone. As a result, each team member generally contributed in both coding and writing throughout the project.
+For our project, we never assigned specific permanent roles. Instead, we would hold a meeting at the release of each milestone where we would decide on roles and our direction for that specific milestone. Work was usually split into four categories: design, optimization, evaluation, and writeup. People would pick work that best fits their schedule and promptly finish that task in a timely manner. As a result, each team member generally contributed to both coding and writing throughout the project.
 
 #### Specific contributions by team member
 
 Name: Darren Yu\
 Title: Team Facilitator\
-Contribution: Repository Traffic Control, Data Exploration, Data Preprocessing, and Model 2 Hyperparameter Tuning
+Contribution: Repository Traffic Control, Data Exploration, Extensive Data Preprocessing, and Model 2 Optimization.
 
 Name: Michael Ye\
 Title: Team Member\
-Contribution: Data Exploration, Data Preprocessing, Model 3 creation and tuning
+Contribution: Data Exploration, Data Preprocessing, Model 3 Optimization, and Model 3 Evaluation.
 
 Name: Merrick Qiu\
 Title: Neural Network Coder\
-Contribution: Data preprocessing, Model 1 and 3 creation and training
+Contribution: Data Preprocessing, Model 1 Design, and Model 3 Design.
 
 Name: Dylan Olivares\
-Title: Team member\
-Contribution: Data exploration, Model 1 evaluation, Model 2 conclusion writeup
+Title: Team Member\
+Contribution: Data Exploration, Model 1 Evaluation, Model 2 Writeup.
 
 Name: Yifan Chen\
 Title: Team Member\
-Contribution: Project Brainstorming, data exploration and processing, evaluation for Model 1, and Model 2 training.
+Contribution: Project Brainstorming, Data Exploration, Data Processing, Model 1 Evaluation, and Model 2 Design.
 
 Name: Albert Chen\
-Title: Team member\
-Contribution: Data exploration, Model 1 conclusion writeup, Model 3 tuning, and evaluation
+Title: Team Member\
+Contribution: Data Exploration, Model 1 Writeup, Model 3 Optimization, and Model 3 Writup.
 
 Name: Leo Friedman\
-Title: Team member\
-Contribution: Data exploration, Model 1 evaluation, Final Writeup
+Title: Team Member\
+Contribution: Data Exploration, Model 1 Evaluation, and Final Writeup.
 
 Name: Nathan Morales\
 Title: Team Member\
-Contribution: Planning data preprocessing, Model 1 Evaluation, Final Writeup
+Contribution: Data Preprocessing, Model 1 Evaluation, and Final Writeup.
